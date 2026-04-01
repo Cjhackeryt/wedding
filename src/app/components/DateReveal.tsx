@@ -80,7 +80,7 @@ export function DateReveal() {
                       </div>
                       <div>
                         <p className="text-sm text-gray-600">Date</p>
-                        <p className="text-xl font-semibold text-gray-800">Sunday, June 07, 2026</p>
+                        <p className="text-xl font-semibold text-gray-800">Sunday, May 31, 2026</p>
                       </div>
                     </motion.div>
 
