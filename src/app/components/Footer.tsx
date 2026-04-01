@@ -41,7 +41,7 @@ export function Footer() {
           </motion.div>
           
           <h2 className="mb-4 font-serif text-4xl text-white">Mohammed Suhail & Amrin Fathima</h2>
-          <p className="text-lg text-gray-400">June 07, 2026</p>
+          <p className="text-lg text-gray-400">May 31, 2026</p>
         </div>
 
         {/* Social links */}
