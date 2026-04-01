@@ -18,7 +18,7 @@ interface Event {
 const events: Event[] = [
   {
     name: "Nikkah Ceremony",
-    date: "Sunday, June 07, 2026",
+    date: "Sunday, May 31, 2026",
     time: "11:00 AM - 12:00 PM",
     venue: "Vani Mahal, Chennai-TN",
     description: "The sacred Nikkah ceremony where we will take our vows in the presence of our loved ones and seek Allah's blessings.",
