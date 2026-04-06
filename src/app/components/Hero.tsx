@@ -1,6 +1,6 @@
 'use client;'
-import { useEffect, useRef } from 'react'; // 👈 add useRef
-import { motion } from 'motion/react';
+import { useEffect, useRef } from 'react';
+import { motion, useAnimation } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
 import '@fontsource/playfair-display';
 import '@fontsource/great-vibes';
@@ -12,23 +12,29 @@ import { Heart } from 'lucide-react';
 
 
 export function Hero() {
+  const sectionRef = useRef(null);
+  const controls = useAnimation();
 
-
-  const sectionRef = useRef(null); // 👈 ref for the <section>
-
-  // ⏱️ Auto-scroll to next section after 3 seconds
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
+      // 🎬 Swipe-up animation: hero slides up and out
+      await controls.start({
+        y: '-100%',
+        opacity: 0,
+        transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
+      });
+
+      // ⬇️ Then scroll to next section after animation completes
       const nextSection = sectionRef.current?.nextElementSibling;
       if (nextSection) {
         nextSection.scrollIntoView({ behavior: 'smooth' });
       } else {
         window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
       }
-    }, 3000);
+    }, 10000);
 
-    return () => clearTimeout(timer); // cleanup on unmount
-  }, []);
+    return () => clearTimeout(timer);
+  }, [controls]);
   return (
     <section className="relative h-screen w-full overflow-hidden">
 
@@ -139,13 +145,31 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.6 }}
-          className="absolute bottom-10"
+          className="absolute bottom-10 left-0 right-0 flex flex-col items-center justify-center"
         >
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
+            className="flex flex-col items-center justify-center"
           >
-            <ChevronDown className="h-8 w-8 text-amber-300" />
+           <p
+              className="text-2xl tracking-widest mb-1 drop-shadow-lg"
+              style={{
+                fontFamily: 'Great Vibes, cursive',
+                color: 'white',
+                textShadow: '0 0 10px #fbbf24, 0 0 25px #fbbf24, 0 0 50px #f59e0b, 0 0 80px #f59e0b',
+                letterSpacing: '0.15em',
+              }}
+            >
+              Scroll down
+            </p>
+            <ChevronDown
+              className="h-15 w-15"
+              style={{
+                color: 'white',
+                filter: 'drop-shadow(0 0 8px #fbbf24) drop-shadow(0 0 20px #f59e0b)',
+              }}
+            />
           </motion.div>
         </motion.div>
 
@@ -207,27 +231,27 @@ export function Hero() {
           </motion.div>
 
           {/* 💎 Names */}
-<motion.h1
-  initial={{ opacity: 0, scale: 0.85 }}
-  animate={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 1, delay: 0.3 }}
-  className="text-4xl leading-tight text-center"
-  style={{ fontFamily: 'Avenue de Madison' }}
->
-  {/* 📱 Mobile view (stacked with heart center) */}
-  <span className="flex flex-col items-center gap-2 md:hidden">
-    <span>Mohammed Suhail</span>
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="text-4xl leading-tight text-center"
+            style={{ fontFamily: 'Avenue de Madison' }}
+          >
+            {/* 📱 Mobile view (stacked with heart center) */}
+            <span className="flex flex-col items-center gap-2 md:hidden">
+              <span>Mohammed Suhail</span>
 
-    <span className="text-amber-300 text-2xl">❤</span>
+              <span className="text-amber-300 text-2xl">❤</span>
 
-    <span>Amrin Fathima</span>
-  </span>
+              <span>Amrin Fathima</span>
+            </span>
 
-  {/* 💻 Desktop view (inline) */}
-  <span className="hidden md:inline">
-    Mohammed Suhail <span className="text-amber-300">&</span> Amrin Fathima
-  </span>
-</motion.h1>
+            {/* 💻 Desktop view (inline) */}
+            <span className="hidden md:inline">
+              Mohammed Suhail <span className="text-amber-300">&</span> Amrin Fathima
+            </span>
+          </motion.h1>
 
           {/* ✨ Ceremony */}
           <motion.p
@@ -239,7 +263,6 @@ export function Hero() {
           >
             Nikkah Ceremony
           </motion.p>
-
           {/* 💌 Subtitle */}
           <motion.p
             initial={{ opacity: 0 }}
@@ -251,7 +274,40 @@ export function Hero() {
           </motion.p>
 
         </div>
+
+        {/* ⬇️ Scroll - Mobile */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.6 }}
+          className="absolute bottom-10 left-0 right-0 flex flex-col items-center justify-center z-20"
+        >
+          <motion.div
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="flex flex-col items-center justify-center"
+          >
+            <p
+              className="text-2xl tracking-widest mb-1 drop-shadow-lg"
+              style={{
+                fontFamily: 'Great Vibes, cursive',
+                color: 'black',
+                textShadow: '0 0 10px #fbbf24, 0 0 25px #fbbf24, 0 0 50px #f59e0b, 0 0 80px #f59e0b',
+                letterSpacing: '0.15em',
+              }}
+            >
+              Scroll down
+            </p>
+            <ChevronDown
+              className="h-15 w-15"
+              style={{
+                color: 'white',
+                filter: 'drop-shadow(0 0 8px #fbbf24) drop-shadow(0 0 20px #f59e0b)',
+              }}
+            />
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </section >
   );
 }
