@@ -1,3 +1,5 @@
+'use client;'
+import { useEffect, useRef } from 'react'; // 👈 add useRef
 import { motion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
 import '@fontsource/playfair-display';
@@ -10,6 +12,23 @@ import { Heart } from 'lucide-react';
 
 
 export function Hero() {
+
+
+  const sectionRef = useRef(null); // 👈 ref for the <section>
+
+  // ⏱️ Auto-scroll to next section after 3 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const nextSection = sectionRef.current?.nextElementSibling;
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+      }
+    }, 3000);
+
+    return () => clearTimeout(timer); // cleanup on unmount
+  }, []);
   return (
     <section className="relative h-screen w-full overflow-hidden">
 
